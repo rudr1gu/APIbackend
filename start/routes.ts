@@ -8,6 +8,10 @@
 */
 
 import router from '@adonisjs/core/services/router'
+const PostagemsController = () => import('#controllers/postagems_controller')
+
+
+router.group(() => {
 
 
 router.get('/', async () => {
@@ -15,3 +19,7 @@ router.get('/', async () => {
     hello: 'world',
   }
 })
+
+router.post('/postagems', [PostagemsController, 'store'])
+
+}).prefix('api')
