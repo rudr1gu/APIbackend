@@ -20,6 +20,6 @@ router.get('/', async () => {
   }
 })
 
-router.post('/postagems', [PostagemsController, 'store'])
+router.resource('/postagems', PostagemsController).apiOnly()
 
 }).prefix('api')
