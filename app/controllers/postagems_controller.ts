@@ -3,10 +3,8 @@ import Postagem from '#models/postagem'
 
 export default class PostagemsController {
 
-    async index({ response }: HttpContext) {
-        const postagens = await Postagem.all()
-    
-        response.status(200).json(postagens)
+    async index() {
+        const postagens = await Postagem.query().preload('comentarios')
     
         return {
           message: 'listagem de postagens',
@@ -16,17 +14,6 @@ export default class PostagemsController {
 
     async store({ request, response }: HttpContext) {
         const body = request.body()
-        // const image = request.file('image', this.validationOptions)
-    
-        // if(image) {
-        //   const imageName = `${uuidv4()}.${image.extname}`
-    
-        //   await image.move(app.tmpPath('uploads'), {
-        //     name: imageName,
-        //   })
-    
-        //   body.image = imageName
-        // }
     
         const postagem = await Postagem.create(body)
     
@@ -38,15 +25,10 @@ export default class PostagemsController {
         }
       }
 
-    async show({ params, response }: HttpContext) {
-        const postagem = await Postagem.find(params.id)
-    
-        if(!postagem) {
-          response.status(404).json({ message: 'postagem não encontrada' })
-          return
-        }
-    
-        response.status(200).json(postagem)
+    async show({ params}: HttpContext) {
+        const postagem = await Postagem.findOrFail(params.id)
+
+        await postagem.load('comentarios')
     
         return {
           message: 'detalhes da postagem',

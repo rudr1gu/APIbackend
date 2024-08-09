@@ -1,7 +1,12 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import Comentario from '#models/comentario'
+import type { HasMany } from '@adonisjs/lucid/types/relations'
 
 export default class Postagem extends BaseModel {
+  @hasMany(() => Comentario)
+  public comentarios!: HasMany<typeof Comentario>
+
   @column({ isPrimary: true })
   declare id: number
 
