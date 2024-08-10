@@ -6,7 +6,7 @@ export default class ComentariosController {
     public async store({request, params, response}: HttpContext){
 
         const body = request.body()
-        const postagemId = params.id
+        const postagemId = params.postagemId
 
         await Postagem.findOrFail(postagemId)
         body.postagemId = postagemId
