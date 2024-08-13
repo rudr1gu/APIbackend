@@ -10,7 +10,7 @@
 import router from '@adonisjs/core/services/router'
 const PostagemsController = () => import('#controllers/postagems_controller')
 const ComentariosController = () => import('#controllers/comentarios_controller')
-
+const AlunosController = () => import('#controllers/alunos_controller')
 
 router.group(() => {
 
@@ -24,5 +24,7 @@ router.get('/', async () => {
 router.resource('/postagems', PostagemsController).apiOnly()
 
 router.post('/postagems/:postagemId/comentarios', [ComentariosController, 'store'])
+
+router.resource('/alunos', AlunosController).apiOnly()
 
 }).prefix('api')
