@@ -24,11 +24,10 @@ export default class AlunosController {
     }
 
     public async show({params, response}: HttpContext){
+        const aluno = await Aluno.find(params.id)
+
         response.status(200)
-        return {
-            message: 'Detalhes do aluno',
-            data: params.id
-        }
+        return aluno;
     }
 
     public async update({params, request, response}: HttpContext){
