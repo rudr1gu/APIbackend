@@ -31,10 +31,13 @@ export default class Aluno extends BaseModel {
   declare telefone: string
 
   @column()
-  declare turma: string
+  declare curso: string
 
   @column()
   declare genero: string
+
+  @column()
+  declare img: string
   
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
