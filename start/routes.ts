@@ -8,6 +8,9 @@
 */
 
 import router from '@adonisjs/core/services/router'
+import app from '@adonisjs/core/services/app'
+import { sep, normalize } from 'node:path'
+import fs from 'fs'
 
 const PostagemsController = () => import('#controllers/postagems_controller')
 const ComentariosController = () => import('#controllers/comentarios_controller')
@@ -15,7 +18,6 @@ const AlunosController = () => import('#controllers/alunos_controller')
 const AlunoLoginsController = () => import('#controllers/aluno_logins_controller')
 
 router.group(() => {
-
 
 router.get('/', async () => {
   return {
@@ -32,3 +34,26 @@ router.resource('/alunos', AlunosController).apiOnly()
 router.post('/alunos/login', [AlunoLoginsController, 'store'])
 
 }).prefix('api')
+
+const PATH_TRAVERSAL_REGEX = /(?:^|[\\/])\.\.(?:[\\/]|$)/
+
+router.get('/uploads/*', ({ request, response }) => {
+  const filePath = request.param('*').join(sep)
+  const normalizedPath = normalize(filePath)
+  
+  console.log('Requested File Path:', filePath)
+  console.log('Normalized Path:', normalizedPath)
+
+  if (PATH_TRAVERSAL_REGEX.test(normalizedPath)) {
+    return response.badRequest('Malformed path')
+  }
+
+  const absolutePath = app.makePath('tmp/uploads', normalizedPath)
+  console.log('Absolute Path:', absolutePath)
+
+  if (fs.existsSync(absolutePath)) {  // Check if file exists
+    return response.download(absolutePath)
+  } else {
+    return response.notFound('File not found')
+  }
+})

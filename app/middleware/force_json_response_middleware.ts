@@ -10,6 +10,7 @@ export default class ForceJsonResponseMiddleware {
   async handle({ request }: HttpContext, next: NextFn) {
     const headers = request.headers()
     headers.accept = 'application/json'
+    
 
     return next()
   }
