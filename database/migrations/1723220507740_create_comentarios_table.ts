@@ -7,6 +7,7 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.string('autor', 100)
+      table.string('img_autor', 100)
       table.text('conteudo').notNullable()
       table.integer('postagem_id').unsigned().references('id').inTable('postagems').onDelete('CASCADE')
       table.integer('qntd_estrelas').defaultTo(0)

@@ -9,6 +9,7 @@ export default class extends BaseSchema {
       table.string('titulo', 100).notNullable()
       table.text('conteudo').notNullable()
       table.string('autor', 100).notNullable()
+      table.string('img_autor', 100)
       table.string('imagem', 100)
       table.string('tags', 30)
       table.integer('qntd_estrelas').defaultTo(0)

@@ -14,7 +14,7 @@ export default class extends BaseSchema {
       table.string('matricula', 20)
       table.date('data_nascimento')
       table.string('telefone', 20)
-      table.string('curso', 20)
+      table.string('curso', 50)
       table.string('genero', 1)
       table.string('img', 100)
       table.timestamp('created_at').defaultTo(this.now())

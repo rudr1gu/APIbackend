@@ -9,6 +9,9 @@ export default class Comentario extends BaseModel {
   declare autor: string
 
   @column()
+  declare img_autor: string
+
+  @column()
   declare conteudo: string
 
   @column()

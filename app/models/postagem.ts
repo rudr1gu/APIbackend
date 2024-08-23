@@ -20,6 +20,9 @@ export default class Postagem extends BaseModel {
   declare autor: string
 
   @column()
+  declare img_autor: string
+
+  @column()
   declare imagem: string
 
   @column()
