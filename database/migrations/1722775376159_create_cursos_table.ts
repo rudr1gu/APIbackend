@@ -1,16 +1,14 @@
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'comentarios'
+  protected tableName = 'cursos'
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary()
-      table.string('autor', 100)
-      table.string('img_autor', 100)
-      table.text('conteudo').notNullable()
-      table.integer('postagem_id').unsigned().references('id').inTable('postagems').onDelete('CASCADE')
-      table.integer('qntd_estrelas').defaultTo(0)
+      table.string('nome', 100).notNullable()
+      table.string('periodo', 100).notNullable()
+      table.string('modulo', 100).notNullable()
       table.timestamp('created_at').defaultTo(this.now())
       table.timestamp('updated_at').defaultTo(this.now())
     })
