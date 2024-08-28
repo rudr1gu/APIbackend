@@ -14,7 +14,6 @@ export default class extends BaseSchema {
       table.string('matricula', 20)
       table.date('data_nascimento')
       table.string('telefone', 20)
-      table.integer('curso_id').unsigned().references('id').inTable('cursos').onDelete('CASCADE')
       table.string('img', 100)
       table.timestamp('created_at').defaultTo(this.now())
       table.timestamp('updated_at').defaultTo(this.now())

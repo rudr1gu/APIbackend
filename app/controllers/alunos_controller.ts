@@ -12,7 +12,7 @@ export default class AlunosController {
     }
 
     public async index({response}: HttpContext){
-        const alunos = await Aluno.all()
+        const alunos = await Aluno.query().preload('curso')
 
         response.status(200)
         return {

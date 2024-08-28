@@ -1,8 +1,12 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
-
+import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import Curso from '#models/curso'
+import type { HasMany } from '@adonisjs/lucid/types/relations'
 
 export default class Aluno extends BaseModel {
+  @hasMany(() => Curso)
+  public curso!: HasMany<typeof Curso>
+
   @column({ isPrimary: true })
   declare id: number
 
@@ -29,9 +33,6 @@ export default class Aluno extends BaseModel {
 
   @column()
   declare telefone: string
-
-  @column()
-  declare curso_id: number
 
   @column()
   declare img: string

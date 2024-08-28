@@ -30,9 +30,6 @@ export default class Professor extends BaseModel {
   declare telefone: string
 
   @column()
-  declare curso_id: number
-
-  @column()
   declare img: string
 
   @column.dateTime({ autoCreate: true })
