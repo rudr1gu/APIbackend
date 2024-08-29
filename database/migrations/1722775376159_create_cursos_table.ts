@@ -9,8 +9,6 @@ export default class extends BaseSchema {
       table.string('nome', 100).notNullable()
       table.string('periodo', 100).notNullable()
       table.string('modulo', 100).notNullable()
-      table.integer('aluno_id').unsigned().references('id').inTable('alunos').onDelete('CASCADE')
-      table.integer('professor_id').unsigned().references('id').inTable('professors').onDelete('CASCADE')
       table.timestamp('created_at').defaultTo(this.now())
       table.timestamp('updated_at').defaultTo(this.now())
     })

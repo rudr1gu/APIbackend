@@ -16,7 +16,7 @@ const PostagemsController = () => import('#controllers/postagems_controller')
 const ComentariosController = () => import('#controllers/comentarios_controller')
 const AlunosController = () => import('#controllers/alunos_controller')
 const AlunoLoginsController = () => import('#controllers/aluno_logins_controller')
-
+const CursosController = () => import('#controllers/cursos_controller')
 router.group(() => {
 
 router.get('/', async () => {
@@ -30,6 +30,8 @@ router.resource('/postagems', PostagemsController).apiOnly()
 router.post('/postagems/:postagemId/comentarios', [ComentariosController, 'store'])
 
 router.resource('/alunos', AlunosController).apiOnly()
+
+router.resource('/cursos', CursosController).apiOnly()
 
 router.post('/alunos/login', [AlunoLoginsController, 'store'])
 

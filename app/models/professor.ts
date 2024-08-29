@@ -32,6 +32,9 @@ export default class Professor extends BaseModel {
   @column()
   declare img: string
 
+  @column()
+  declare cursoId: number
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
