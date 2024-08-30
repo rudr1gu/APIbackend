@@ -17,6 +17,8 @@ const ComentariosController = () => import('#controllers/comentarios_controller'
 const AlunosController = () => import('#controllers/alunos_controller')
 const AlunoLoginsController = () => import('#controllers/aluno_logins_controller')
 const CursosController = () => import('#controllers/cursos_controller')
+const ProfessorsController = () => import('#controllers/professors_controller')
+
 router.group(() => {
 
 router.get('/', async () => {
@@ -34,6 +36,8 @@ router.resource('/alunos', AlunosController).apiOnly()
 router.resource('/cursos', CursosController).apiOnly()
 
 router.post('/alunos/login', [AlunoLoginsController, 'store'])
+
+router.resource('/professors', ProfessorsController).apiOnly()
 
 }).prefix('api')
 
