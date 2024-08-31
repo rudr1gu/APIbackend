@@ -2,7 +2,7 @@
 - Framework AdonisJS
 - ORM Lucid
 - Banco de dados MySQL
-- 
+
 ### Requisitos 
 
 NodeJs v20.14.0
