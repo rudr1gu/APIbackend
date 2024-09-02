@@ -19,7 +19,7 @@ export default class AlunoLoginsController {
         return {
             message: 'Aluno logado com sucesso',
             token: aluno.id,
-            aluno: {
+            user: {
                 id: aluno.id,
                 nome: aluno.nome,
                 email: aluno.email

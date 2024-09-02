@@ -18,7 +18,7 @@ export default class ProfessorLoginsController {
         return {
             message: 'professor logado com sucesso',
             token: professor.id,
-            professor: {
+            user: {
                 id: professor.id,
                 nome: professor.nome,
                 email: professor.email
