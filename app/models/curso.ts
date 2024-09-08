@@ -28,6 +28,9 @@ export default class Curso extends BaseModel {
 
   @column()
   declare professorId: number
+
+  @column()
+  declare materiaId: number
   
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
