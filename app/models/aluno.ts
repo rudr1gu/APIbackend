@@ -27,7 +27,7 @@ export default class Aluno extends BaseModel {
   declare matricula: string
 
   @column()
-  declare data_nascimento: Date
+  declare dataNascimento: Date
 
   @column()
   declare telefone: string

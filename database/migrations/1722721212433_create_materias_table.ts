@@ -8,7 +8,6 @@ export default class extends BaseSchema {
       table.increments('id')
       table.string('nome').notNullable()
       table.string('descricao').notNullable()
-      table.integer('tagsId').unsigned().references('id').inTable('tags').onDelete
       table.timestamp('created_at').defaultTo(this.now())
       table.timestamp('updated_at').defaultTo(this.now())
     })

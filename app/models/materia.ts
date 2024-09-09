@@ -12,7 +12,7 @@ export default class Materia extends BaseModel {
   declare descricao: string
 
   @column()
-  declare tagsId: number
+  declare cursoId: number
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

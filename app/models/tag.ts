@@ -8,6 +8,9 @@ export default class Tag extends BaseModel {
   @column()
   declare nome: string
 
+  @column()
+  declare materiaId: number
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
