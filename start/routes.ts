@@ -21,6 +21,7 @@ const ProfessorsController = () => import('#controllers/professors_controller')
 const ProfessorLoginsController = () => import('#controllers/professor_logins_controller')
 const ForumsController = () => import('#controllers/forums_controller')
 const TagsController = () => import('#controllers/tags_controller')
+const MateriasController = () => import('#controllers/materias_controller')
 
 router.group(() => {
 
@@ -47,6 +48,8 @@ router.post('/professor/login', [ProfessorLoginsController, 'store'])
 router.resource('/forums', ForumsController).apiOnly()
 
 router.post('tags', [TagsController, 'store'])
+
+router.post('materias', [MateriasController, 'store'])
 
 }).prefix('api')
 

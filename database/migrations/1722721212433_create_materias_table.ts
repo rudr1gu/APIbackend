@@ -5,9 +5,10 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
+      table.increments('id').primary()
       table.string('nome').notNullable()
       table.string('descricao').notNullable()
+      table.integer('curso_id').unsigned().references('id').inTable('cursos').onDelete('CASCADE')
       table.timestamp('created_at').defaultTo(this.now())
       table.timestamp('updated_at').defaultTo(this.now())
     })

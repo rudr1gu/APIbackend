@@ -9,7 +9,6 @@ export default class extends BaseSchema {
       table.string('nome', 100).notNullable()
       table.string('periodo', 100).notNullable()
       table.string('modulo', 100).notNullable()
-      table.integer('materias_id').unsigned().references('id').inTable('materias').onDelete('CASCADE')
       table.timestamp('created_at').defaultTo(this.now())
       table.timestamp('updated_at').defaultTo(this.now())
     })
