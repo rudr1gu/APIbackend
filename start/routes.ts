@@ -19,6 +19,7 @@ const AlunoLoginsController = () => import('#controllers/aluno_logins_controller
 const CursosController = () => import('#controllers/cursos_controller')
 const ProfessorsController = () => import('#controllers/professors_controller')
 const ProfessorLoginsController = () => import('#controllers/professor_logins_controller')
+const ForumsController = () => import('#controllers/forums_controller')
 
 router.group(() => {
 
@@ -41,6 +42,8 @@ router.post('/alunos/login', [AlunoLoginsController, 'store'])
 router.resource('/professores', ProfessorsController).apiOnly()
 
 router.post('/professor/login', [ProfessorLoginsController, 'store'])
+
+router.resource('/forums', ForumsController).apiOnly()
 
 }).prefix('api')
 
