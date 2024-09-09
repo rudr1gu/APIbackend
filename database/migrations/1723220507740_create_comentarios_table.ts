@@ -9,7 +9,7 @@ export default class extends BaseSchema {
       table.string('autor', 100)
       table.string('img_autor', 100)
       table.text('conteudo').notNullable()
-      table.integer('postagem_id').unsigned().references('id').inTable('postagens').onDelete('CASCADE')
+      table.integer('postagem_id').unsigned().references('id').inTable('postagems').onDelete('CASCADE')
       table.integer('qntd_estrelas').defaultTo(0)
       table.timestamp('created_at').defaultTo(this.now())
       table.timestamp('updated_at').defaultTo(this.now())
