@@ -1,7 +1,16 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import type { HasMany } from '@adonisjs/lucid/types/relations'
+import Aluno from './aluno.js'
+import Materia from './materia.js'
 
 export default class Forum extends BaseModel {
+  @hasMany(() => Aluno)
+  public alunos!: HasMany<typeof Aluno>
+
+  @hasMany(() => Materia)
+  public materias!: HasMany<typeof Materia>
+
   @column({ isPrimary: true })
   declare id: number
 
