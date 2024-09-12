@@ -3,7 +3,7 @@ import Forum from '#models/forum'
 
 export default class ForumsController {
     public async index(){
-        const forums = await Forum.all()
+        const forums = await Forum.query().preload('aluno').preload('materia')
 
         return forums
     }

@@ -10,7 +10,7 @@ export default class extends BaseSchema {
       table.string('descricao').notNullable()
       table.string('fileName')
       table.integer('aluno_id').unsigned().references('id').inTable('alunos').onDelete('CASCADE')
-      table.integer('professor_id').unsigned().references('id').inTable('professores').onDelete('CASCADE')
+      table.integer('professor_id').unsigned().references('id').inTable('professors').onDelete('CASCADE')
       table.integer('materia_id').unsigned().references('id').inTable('materias').onDelete('CASCADE')
       table.timestamp('created_at').defaultTo(this.now())
       table.timestamp('updated_at').defaultTo(this.now())
