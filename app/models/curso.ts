@@ -3,6 +3,7 @@ import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 import Aluno from './aluno.js'
 import type{ HasMany } from '@adonisjs/lucid/types/relations'
 import Professor from './professor.js'
+import Materia from './materia.js'
 
 export default class Curso extends BaseModel {
   @hasMany(() => Aluno)
@@ -10,6 +11,9 @@ export default class Curso extends BaseModel {
 
   @hasMany(() => Professor)
   public professores!: HasMany<typeof Professor>
+
+  @hasMany(() => Materia)
+  public materias!: HasMany<typeof Materia>
 
   @column({ isPrimary: true })
   declare id: number

@@ -4,7 +4,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 export default class CursosController {
 
     public async index(){
-        const cursos = await Curso.query().preload('alunos').preload('professores')
+        const cursos = await Curso.query().preload('alunos').preload('professores').preload('materias')
 
         return {
             message: 'Lista de cursos',

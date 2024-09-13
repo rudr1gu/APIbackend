@@ -1,7 +1,12 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import type { HasMany } from '@adonisjs/lucid/types/relations'
+import Tag from './tag.js'
 
 export default class Materia extends BaseModel {
+  @hasMany(() => Tag)
+  public tags!: HasMany<typeof Tag>
+
   @column({ isPrimary: true })
   declare id: number
 
