@@ -49,7 +49,7 @@ router.resource('/forums', ForumsController).apiOnly()
 
 router.post('tags', [TagsController, 'store'])
 
-router.post('materias', [MateriasController, 'store'])
+router.resource('materias', MateriasController).apiOnly()
 
 }).prefix('api')
 
