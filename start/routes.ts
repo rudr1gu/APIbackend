@@ -22,7 +22,7 @@ const ProfessorLoginsController = () => import('#controllers/professor_logins_co
 const ForumsController = () => import('#controllers/forums_controller')
 const TagsController = () => import('#controllers/tags_controller')
 const MateriasController = () => import('#controllers/materias_controller')
-
+const RespostasController = () => import('#controllers/respostas_controller')
 router.group(() => {
 
 router.get('/', async () => {
@@ -34,6 +34,8 @@ router.get('/', async () => {
 router.resource('/postagems', PostagemsController).apiOnly()
 
 router.post('/postagems/:postagemId/comentarios', [ComentariosController, 'store'])
+
+router.post('/forums/:forumId/respostas', [RespostasController, 'store'])
 
 router.resource('/alunos', AlunosController).apiOnly()
 
