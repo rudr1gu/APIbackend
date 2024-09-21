@@ -8,6 +8,9 @@ export default class ForumsController {
             .preload('materia', (query) => {
                 query.preload('tags')
             })
+            .preload('respostas' , (query) => {
+                query.preload('aluno')
+            })
 
         return forums
     }
@@ -24,6 +27,15 @@ export default class ForumsController {
 
     public async show({ params }: HttpContext){
         const forum = await Forum.findOrFail(params.id)
+
+        await forum.load('aluno')
+        await forum.load('materia', (query) => {
+            query.preload('tags')
+        })
+        await forum.load('respostas', (query) => {
+            query.preload('aluno')
+        })
+
 
         return forum
     }

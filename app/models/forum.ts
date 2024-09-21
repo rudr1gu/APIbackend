@@ -1,9 +1,10 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column} from '@adonisjs/lucid/orm'
-
+import { BaseModel, belongsTo, column, hasMany} from '@adonisjs/lucid/orm'
 import Aluno from './aluno.js'
 import Materia from './materia.js'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import type { HasMany } from '@adonisjs/lucid/types/relations'
+import Resposta from './resposta.js'
 
 export default class Forum extends BaseModel {
   @belongsTo(() => Aluno, {
@@ -15,6 +16,11 @@ export default class Forum extends BaseModel {
     foreignKey: 'materiaId'
   })
   declare materia: BelongsTo<typeof Materia>
+
+  @hasMany(()=> Resposta, {
+    foreignKey: 'forumId'
+  })
+  declare respostas: HasMany<typeof Resposta>
 
   @column({ isPrimary: true })
   declare id: number
