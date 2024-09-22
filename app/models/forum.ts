@@ -1,10 +1,10 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column, hasMany} from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, hasMany, manyToMany} from '@adonisjs/lucid/orm'
 import Aluno from './aluno.js'
 import Materia from './materia.js'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
-import type { HasMany } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, HasMany, ManyToMany } from '@adonisjs/lucid/types/relations'
 import Resposta from './resposta.js'
+import Tag from './tag.js'
 
 export default class Forum extends BaseModel {
   @belongsTo(() => Aluno, {
@@ -21,6 +21,13 @@ export default class Forum extends BaseModel {
     foreignKey: 'forumId'
   })
   declare respostas: HasMany<typeof Resposta>
+
+  @manyToMany(() => Tag, {
+    pivotTable: 'forum_tags',  // Nome da tabela de junção
+    pivotForeignKey: 'forum_id',  // Chave estrangeira para o fórum
+    pivotRelatedForeignKey: 'tag_id'  // Chave estrangeira para a tag
+  })
+  declare tags: ManyToMany<typeof Tag>
 
   @column({ isPrimary: true })
   declare id: number

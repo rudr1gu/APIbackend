@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Forum from '#models/forum'
+import Tag from '#models/tag'
 
 export default class ForumsController {
     public async index(){
@@ -8,6 +9,7 @@ export default class ForumsController {
             .preload('materia', (query) => {
                 query.preload('tags')
             })
+            .preload('tags')
             .preload('respostas' , (query) => {
                 query.preload('aluno')
             })
@@ -18,7 +20,22 @@ export default class ForumsController {
     public async store({ request, response }: HttpContext){
         const body = request.body()
 
+        const tags = body.tags
+
         const forum = await Forum.create(body)
+
+        if (tags && tags.length > 0) {
+            for (const tagNome of tags) {
+                // Verificar se a tag já existe
+                let tag = await Tag.findBy('nome', tagNome)
+                if (!tag) {
+                    // Criar a tag se não existir
+                    tag = await Tag.create({ nome: tagNome })
+                }
+                // Associar a tag ao fórum
+                await forum.related('tags').attach([tag.id])
+            }
+        }
 
         response.status(201).json(forum)
 
