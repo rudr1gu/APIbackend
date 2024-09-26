@@ -9,6 +9,8 @@ tmp
 .env.production.local
 .env.development.local
 
+
+
 # Frontend assets compiled code
 public/assets
 
