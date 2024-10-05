@@ -1,8 +1,17 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Forum from '#models/forum'
 import Tag from '#models/tag'
+import app from '@adonisjs/core/services/app'
+
+import {v4 as uuidv4} from 'uuid'
 
 export default class ForumsController {
+    private validationOptions = {
+        types: ['img'],
+        size: '2mb'
+    }
+
+
     public async index(){
         const forums = await Forum.query()
             .preload('aluno')
@@ -19,6 +28,18 @@ export default class ForumsController {
 
     public async store({ request, response }: HttpContext){
         const body = request.body()
+
+        const img = request.file('fileName', this.validationOptions)
+
+        if(img){
+            const imgName = `${uuidv4()}.${img.extname}`
+
+            await img.move(app.tmpPath('uploads'), {
+                name: imgName
+            })
+
+            body.fileName = imgName
+        }
 
         const tags = body.tags
 

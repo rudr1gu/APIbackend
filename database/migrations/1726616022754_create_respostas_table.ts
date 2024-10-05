@@ -7,7 +7,7 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary()
       table.text('resposta').notNullable()
-      table.string('fileName')
+      table.string('file_name')
       table.integer('forum_id').unsigned().references('id').inTable('forums').onDelete('CASCADE')
       table.integer('usuario_id').unsigned().references('id').inTable('alunos').onDelete('CASCADE')
       table.timestamp('created_at').defaultTo(this.now())

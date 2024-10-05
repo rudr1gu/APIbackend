@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       table.increments('id').primary()
       table.string('titulo').notNullable()
       table.text('descricao').notNullable()
-      table.string('fileName')
+      table.string('file_name')
       table.integer('aluno_id').unsigned().references('id').inTable('alunos').onDelete('CASCADE')
       table.integer('professor_id').unsigned().references('id').inTable('professors').onDelete('CASCADE')
       table.integer('materia_id').unsigned().references('id').inTable('materias').onDelete('CASCADE')
