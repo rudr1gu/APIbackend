@@ -27,41 +27,43 @@ export default class ForumsController {
     }
 
     public async store({ request, response }: HttpContext){
-        const body = request.body()
-
-        const img = request.file('fileName', this.validationOptions)
-
-        if(img){
-            const imgName = `${uuidv4()}.${img.extname}`
-
+        const body = request.body();
+    
+        const img = request.file('fileName', this.validationOptions);
+    
+        if (img) {
+            const imgName = `${uuidv4()}.${img.extname}`;
             await img.move(app.tmpPath('uploads'), {
                 name: imgName
-            })
-
-            body.fileName = imgName
+            });
+            body.fileName = imgName;
         }
-
-        const tags = body.tags
-
-        const forum = await Forum.create(body)
-
+    
+        const tags = JSON.parse(body.tags);
+    
+        // Verificar e criar tags se necessário antes de criar o fórum
+        const tagIds = [];
         if (tags && tags.length > 0) {
             for (const tagNome of tags) {
-                // Verificar se a tag já existe
-                let tag = await Tag.findBy('nome', tagNome)
+                let tag = await Tag.findBy('nome', tagNome);
                 if (!tag) {
-                    // Criar a tag se não existir
-                    tag = await Tag.create({ nome: tagNome })
+                    tag = await Tag.create({ nome: tagNome });
                 }
-                // Associar a tag ao fórum
-                await forum.related('tags').attach([tag.id])
+                tagIds.push(tag.id);  // Armazenar os IDs das tags para associar depois
             }
         }
-
-        response.status(201).json(forum)
-
-        return forum
+    
+        const forum = await Forum.create(body);
+    
+        // Associar as tags ao fórum
+        if (tagIds.length > 0) {
+            await forum.related('tags').attach(tagIds);
+        }
+    
+        response.status(201).json(forum);
+        return forum;
     }
+    
 
     public async show({ params }: HttpContext){
         const forum = await Forum.findOrFail(params.id)
