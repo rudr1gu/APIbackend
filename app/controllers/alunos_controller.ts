@@ -52,16 +52,17 @@ export default class AlunosController {
         return aluno;
     }
 
-    public async update({params, request, response}: HttpContext){
+    public async update({params, request}: HttpContext){
         const body = request.body()
-        response.status(200)
-        return {
-            message: 'Aluno atualizado com sucesso',
-            data: {
-                id: params.id,
-                ...body
-            }
-        }
+
+        const alunos = await Aluno.findOrFail(params.id)
+
+        alunos.estrelas = body.estrelas
+        alunos.img = body.img
+
+        await alunos.save()
+
+        return alunos;
     }
 
     public async destroy({params, response}: HttpContext){

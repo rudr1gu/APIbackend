@@ -37,6 +37,8 @@ router.post('/postagems/:postagemId/comentarios', [ComentariosController, 'store
 
 router.post('/forums/:forumId/respostas', [RespostasController, 'store'])
 
+router.delete('/respostas/:id', [RespostasController, 'destroy'])
+
 router.resource('/alunos', AlunosController).apiOnly()
 
 router.resource('/cursos', CursosController).apiOnly()

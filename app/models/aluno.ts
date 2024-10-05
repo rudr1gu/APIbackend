@@ -37,6 +37,9 @@ export default class Aluno extends BaseModel {
 
   @column()
   declare cursoId: number
+
+  @column()
+  declare estrelas: number
   
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

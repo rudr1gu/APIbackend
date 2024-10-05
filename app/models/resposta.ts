@@ -18,6 +18,9 @@ export default class Resposta extends BaseModel {
   declare resposta: string
 
   @column()
+  declare fileName: string
+
+  @column()
   declare forumId: number
 
   @column()
