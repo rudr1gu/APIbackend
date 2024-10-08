@@ -1,9 +1,15 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Forum from '#models/forum'
 import Resposta from '#models/resposta'
-
+import app from '@adonisjs/core/services/app'
+import {v4  as uuidv4} from 'uuid'
 
 export default class RespostasController {
+    private validationOptions = {
+        types: ['img'],
+        size: '2mb'
+    }
+
     public async index({params}: HttpContext){
         const forumId = params.forumId
 
@@ -16,6 +22,17 @@ export default class RespostasController {
 
     public async store({request, params, response}: HttpContext){
         const body = request.body()
+
+        const img = request.file('fileName', this.validationOptions)
+
+        if (img) {
+            const imgName = `${uuidv4()}.${img.extname}`
+            await img.move(app.tmpPath('uploads'), {
+                name: imgName
+            })
+            body.fileName = imgName
+        }
+
         const forumId = params.forumId
 
         await Forum.findOrFail(forumId)
@@ -23,7 +40,7 @@ export default class RespostasController {
 
         const resposta = await Resposta.create(body)
 
-        response.status(201)
+        response.status(201).json(resposta)
 
         return resposta
     }

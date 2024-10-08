@@ -5,12 +5,18 @@ import Materia from './materia.js'
 import type { BelongsTo, HasMany, ManyToMany } from '@adonisjs/lucid/types/relations'
 import Resposta from './resposta.js'
 import Tag from './tag.js'
+import Professor from './professor.js'
 
 export default class Forum extends BaseModel {
   @belongsTo(() => Aluno, {
     foreignKey: 'alunoId'
   })
   declare aluno: BelongsTo<typeof Aluno>
+
+  @belongsTo(() => Professor, {
+    foreignKey: 'professorId'
+  })
+  declare professor: BelongsTo<typeof Professor>
 
   @belongsTo(() => Materia, {
     foreignKey: 'materiaId'
@@ -42,7 +48,10 @@ export default class Forum extends BaseModel {
   declare fileName: string
 
   @column()
-  declare alunoId: number
+  declare alunoId?: number
+
+  @column()
+  declare professorId?: number
 
   @column()
   declare materiaId: number

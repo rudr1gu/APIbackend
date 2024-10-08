@@ -15,6 +15,7 @@ export default class ForumsController {
     public async index(){
         const forums = await Forum.query()
             .preload('aluno')
+            .preload('professor')
             .preload('materia', (query) => {
                 query.preload('tags')
             })
@@ -29,8 +30,8 @@ export default class ForumsController {
     public async store({ request, response }: HttpContext){
         const body = request.body();
     
+        // Processamento de imagem
         const img = request.file('fileName', this.validationOptions);
-    
         if (img) {
             const imgName = `${uuidv4()}.${img.extname}`;
             await img.move(app.tmpPath('uploads'), {
@@ -39,36 +40,50 @@ export default class ForumsController {
             body.fileName = imgName;
         }
     
-        const tags = JSON.parse(body.tags);
+        // Verificar se o campo 'tags' existe antes de fazer o JSON.parse
+        let tags = [];
+        if (body.tags) {
+            try {
+                tags = JSON.parse(body.tags); // Transformar as tags em JSON
+            } catch (error) {
+                return response.status(400).json({ message: 'Erro ao processar as tags' });
+            }
+        }
     
-        // Verificar e criar tags se necessário antes de criar o fórum
-        const tagIds = [];
-        if (tags && tags.length > 0) {
+        // Verificar e criar tags se necessário
+        const tagIds: number[] = [];
+        if (tags.length > 0) {
             for (const tagNome of tags) {
                 let tag = await Tag.findBy('nome', tagNome);
                 if (!tag) {
                     tag = await Tag.create({ nome: tagNome });
                 }
-                tagIds.push(tag.id);  // Armazenar os IDs das tags para associar depois
+                tagIds.push(tag.id); // Armazenar os IDs das tags para associar depois
             }
         }
     
-        const forum = await Forum.create(body);
+        // Criar o fórum com base no alunoId ou professorId
+        let forum;
+        if (body.alunoId) {
+            forum = await Forum.create({ ...body, professorId: undefined });
+        } else if (body.professorId) {
+            forum = await Forum.create({ ...body, alunoId: undefined });
+        }
     
         // Associar as tags ao fórum
         if (tagIds.length > 0) {
-            await forum.related('tags').attach(tagIds);
+            await forum!.related('tags').attach(tagIds);
         }
     
         response.status(201).json(forum);
         return forum;
-    }
-    
+    }   
 
     public async show({ params }: HttpContext){
         const forum = await Forum.findOrFail(params.id)
 
         await forum.load('aluno')
+        await forum.load('professor')
         await forum.load('materia', (query) => {
             query.preload('tags')
         })
