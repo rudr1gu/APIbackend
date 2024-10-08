@@ -88,7 +88,8 @@ export default class ForumsController {
             query.preload('tags')
         })
         await forum.load('respostas', (query) => {
-            query.preload('aluno')
+            query.preload('aluno'),
+            query.preload('professor')
         })
 
 

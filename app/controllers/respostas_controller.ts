@@ -15,7 +15,9 @@ export default class RespostasController {
 
         await Forum.findOrFail(forumId)
 
-        const respostas = await Resposta.query().where('forumId', forumId).preload('aluno')
+        const respostas = await Resposta.query().where('forumId', forumId)
+        .preload('aluno')
+        .preload('professor')
 
         return respostas
     }
@@ -38,7 +40,12 @@ export default class RespostasController {
         await Forum.findOrFail(forumId)
         body.forumId = forumId
 
-        const resposta = await Resposta.create(body)
+        let resposta;
+        if(body.alunoId){
+            resposta = await Resposta.create({...body, professorId: undefined})
+        } else if (body.professorId){
+            resposta = await Resposta.create({...body, alunoId: undefined})
+        }
 
         response.status(201).json(resposta)
 
