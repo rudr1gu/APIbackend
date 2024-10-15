@@ -52,18 +52,30 @@ export default class AlunosController {
         return aluno;
     }
 
-    public async update({params, request}: HttpContext){
-        const body = request.body()
+    public async update({params, request}: HttpContext) {
+        const alunos = await Aluno.findOrFail(params.id);
+      
+        // Verifica se uma imagem foi enviada
+        const img = request.file('img', this.validationOptions);
+      
+        if(img){
+            const imgName = `${uuidv4()}.${img.extname}`
 
-        const alunos = await Aluno.findOrFail(params.id)
+            await img.move(app.tmpPath('uploads'), {
+                name: imgName
+            })
 
-        alunos.estrelas = body.estrelas
-        alunos.img = body.img
-
-        await alunos.save()
-
-        return alunos;
-    }
+            alunos.img = imgName
+        }
+      
+        const body = request.body();
+        alunos.estrelas = body.estrelas; // Atualiza as estrelas ou outros campos
+      
+        await alunos.save();
+      
+        return alunos; // Retorna o aluno atualizado
+      }
+      
 
     public async destroy({params, response}: HttpContext){
         response.status(200)
